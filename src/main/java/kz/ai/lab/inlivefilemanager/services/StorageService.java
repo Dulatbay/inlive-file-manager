@@ -36,12 +36,8 @@ public class StorageService {
                              String directory,
                              boolean generateFileName) {
         try {
-            log.debug("Starting upload for file: {} to directory: {}", filename, directory);
-
             byte[] fileBytes = inputStream.readAllBytes();
             long fileSize = fileBytes.length;
-
-            log.debug("File size: {} bytes", fileSize);
 
             if (generateFileName) {
                 String extension = "";
@@ -50,7 +46,6 @@ public class StorageService {
                     extension = filename.substring(dotIdx);
                 }
                 filename = UUID.randomUUID() + extension;
-                log.debug("Generated new filename: {}", filename);
             }
 
             String contentType = Files.probeContentType(new File(filename).toPath());
@@ -73,23 +68,16 @@ public class StorageService {
                     .metadata(metadata)
                     .build();
 
-            log.debug("Uploading to S3 - Bucket: {}, Key: {}", bucketName, storagePath);
             s3Client.putObject(putObjectRequest, RequestBody.fromBytes(fileBytes));
 
             log.info("File [{}] uploaded successfully to key [{}].", filename, storagePath);
             return filename;
 
-        } catch (S3Exception s3e) {
-            log.error("S3 error while uploading file [{}]: Code: {}, Message: {}",
-                    filename, s3e.awsErrorDetails().errorCode(), s3e.awsErrorDetails().errorMessage(), s3e);
-            throw new RuntimeException("Could not obtain the keys", s3e);
         } catch (IOException ioe) {
-            log.error("IO error while uploading file [{}]: {}", filename, ioe.getMessage(), ioe);
-            throw new RuntimeException("Failed to read file content: " + ioe.getMessage(), ioe);
-        } catch (Exception e) {
-            log.error("Unexpected error while uploading file [{}]: {}", filename, e.getMessage(), e);
-            throw new RuntimeException("Failed to upload file: " + e.getMessage(), e);
+            log.error("Error Occurred: [{}]", ioe.getMessage(), ioe);
         }
+
+        return filename.concat(" failed to upload");
     }
 
     public String deleteFile(String filename, String directory) {

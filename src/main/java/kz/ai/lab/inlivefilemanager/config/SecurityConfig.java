@@ -48,8 +48,8 @@ public class SecurityConfig {
         http
                 .authorizeExchange(authorizeExchangeSpec -> {
                     authorizeExchangeSpec
-                            .pathMatchers("/*/remove/**").hasAuthority("ADMIN")
-                            .pathMatchers("/*/upload/**").hasAuthority("ADMIN")
+                            .pathMatchers("/*/remove/**").hasAnyAuthority("ADMIN", "SUPER_MANAGER")
+                            .pathMatchers("/*/upload/**").hasAnyAuthority("ADMIN", "SUPER_MANAGER")
                             .anyExchange()
                             .permitAll();
                 });
