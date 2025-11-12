@@ -22,7 +22,7 @@ application:
   keycloak-url: ${KEYCLOAK_URL:http://localhost:8182}
   client-id: inlive
   config:
-    max-upload-count: 1000 #Max 1000 files in an upload
+    max-upload-count: 1000
     max-request-size: ${MAX_REQUEST_SIZE:1073741824}  #1gb
     max-in-mem-size: ${MAX_IN_MEM_SIZE:1073741824}  #1gb
 
