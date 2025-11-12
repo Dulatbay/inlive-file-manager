@@ -1,0 +1,35 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 1073741824
+      max-request-size: 1073741824
+      enabled: true
+  application:
+    name: inlive-file-manager
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${OAUTH2_ISSUER:${application.keycloak-url}/realms/${application.realm}}
+          jwk-set-uri: ${OAUTH2_JWK:${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs}
+server:
+  error:
+    include-message: always
+  port: ${PORT:8888}
+  address: 0.0.0.0
+application:
+  realm: master
+  keycloak-url: ${KEYCLOAK_URL:http://localhost:8182}
+  client-id: inlive
+  config:
+    max-upload-count: 1000 #Max 1000 files in an upload
+    max-request-size: ${MAX_REQUEST_SIZE:1073741824}  #1gb
+    max-in-mem-size: ${MAX_IN_MEM_SIZE:1073741824}  #1gb
+
+aws:
+  region: eu-north-1
+  s3:
+    bucket: inlive-bucket
+  credentials:
+    access-key: ${AWS_ACCESS_KEY_ID:}
+    secret-key: ${AWS_SECRET_ACCESS_KEY:}
