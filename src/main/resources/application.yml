@@ -25,7 +25,6 @@ application:
     max-upload-count: 1000
     max-request-size: ${MAX_REQUEST_SIZE:1073741824}  #1gb
     max-in-mem-size: ${MAX_IN_MEM_SIZE:1073741824}  #1gb
-
 aws:
   region: eu-north-1
   s3:
