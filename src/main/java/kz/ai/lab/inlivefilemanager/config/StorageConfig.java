@@ -24,12 +24,16 @@ public class StorageConfig {
     @Value("${aws.credentials.secret-key}")
     private String secretKey;
 
+    @Value("${aws.credentials.s3_end-pont}")
+    private String s3Endpoint;
+
     @Bean
     public S3Client s3Client() {
         AwsBasicCredentials creds = AwsBasicCredentials.create(accessKey, secretKey);
 
         return S3Client.builder()
                 .region(Region.of(region))
+                .endpointOverride(URI.create(s3Endpoint))
                 .credentialsProvider(StaticCredentialsProvider.create(creds))
                 .build();
     }

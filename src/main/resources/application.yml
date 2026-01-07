@@ -18,7 +18,7 @@ server:
   port: ${PORT:8888}
   address: 0.0.0.0
 application:
-  realm: master
+  realm: ${KEYCLOAK_REALM:test}
   keycloak-url: ${KEYCLOAK_URL:http://localhost:8182}
   client-id: inlive
   config:
@@ -28,10 +28,11 @@ application:
 aws:
   region: eu-north-1
   s3:
-    bucket: inlive-bucket
+    bucket: ${AWS_BUCKET:test}
   credentials:
     access-key: ${AWS_ACCESS_KEY_ID:test}
     secret-key: ${AWS_SECRET_ACCESS_KEY:test}
+    s3_end-pont: https://storage.yandexcloud.kz
 
 management:
   endpoint:
