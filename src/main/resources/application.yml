@@ -18,15 +18,15 @@ server:
   port: ${PORT:8888}
   address: 0.0.0.0
 application:
-  realm: ${KEYCLOAK_REALM:test}
-  keycloak-url: ${KEYCLOAK_URL:http://localhost:8182}
-  client-id: inlive
+  realm: ${KEYCLOAK_REALM}
+  keycloak-url: ${KEYCLOAK_URL}
+  client-id: ${KEYCLOAK_CLIENT_ID}
   config:
     max-upload-count: 1000
     max-request-size: ${MAX_REQUEST_SIZE:1073741824}  #1gb
     max-in-mem-size: ${MAX_IN_MEM_SIZE:1073741824}  #1gb
 aws:
-  region: eu-north-1
+  region: eu-central-1
   s3:
     bucket: ${AWS_BUCKET:test}
   credentials:
